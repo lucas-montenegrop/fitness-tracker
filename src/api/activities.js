@@ -34,4 +34,34 @@ export async function createActivity(token, activity) {
     const result = await response.json();
     throw Error(result.message);
   }
+
+  const result = await response.json();
+  return result;
+}
+
+export async function deleteActivity(token, id) {
+  if (!token) {
+    throw Error("you must sign in to DELETE");
+  }
+
+  try {
+    const response = await fetch(API + "/activities/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (!response.ok) {
+      const result = await response.json();
+      throw Error(result.message);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
 }
